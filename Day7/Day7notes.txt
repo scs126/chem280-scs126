@@ -1,0 +1,204 @@
+lecture introducing sizeof() operator
+
+#include <iostream>
+//iostream is the part of the standard library that handles input/output to your terminal screen
+#include <limits>
+
+int main(void)
+{
+    //following block requiires #include <iostream>
+    double number = 1.234;
+    std::cout << "double: " << sizeof(number) << std::endl;
+    //for 1.234 sizeof() will say the size of that double is 8
+    std::cout << "float: " << sizeof(float) << std::endl;
+    //for 1.234 sizeof() will say the float size is 4
+    std::cout << "bool: " << sizeof(bool) << std::endl;
+    //for 1.234 sizeof() will say the bool is 1 (i.e. one bit)
+    std::cout << "char: " << sizeof(char) << std::endl;
+    //for 1.234 sizeof() will say the character is size 1
+    std::cout << "short: " << sizeof(short) << std::endl;
+    //for 1.234 sizeof() will say the short is size 2
+    std::cout << "int: " << sizeof(int) << std::endl;
+    //for 1.234 sizeof() will say the integer is size 4
+    std::cout << "long: " << sizeof(long) << std::endl;
+    //for 1.234 sizeof() will say the long is size 8
+    std::cout << "long long: " << sizeof(long long) << std::endl;
+    //for 1.234 sizeof() will say the long long is size 8
+
+
+    //following block requires #include <limits>
+    std::cout << "limits of int: " << std::numeric_limits<int>::min() << " , "
+                                    << std::numeric_limits<int>::max() << std::endl;
+    //this returns the max/min size of values C++ can store (~-2billion to +2billion)
+    // +/-2billion is not sufficient for many science applications (e.g. memory storage, analysis)
+    //what about long?
+    std::cout << "limits of long: " << std::numeric_limits<long>::min() << " , "
+                                    << std::numeric_limits<long>::max() << std::endl;
+    //more in the range of +/-9quintillion
+    //what if you don't need/can't have negative numbers? e.g. an array can only be +units long
+    //a signed value can be either positive or negative while an unsigned value is only positive
+    // e.g.
+    std::cout << "limits of int: " << std::numeric_limits<unsigned int>::min() << " , "
+                                    << std::numeric_limits<unsigned int>::max() << std::endl;
+    //specifying unsigned int ensures the range of values is only positive
+    //this effectively puts the magnitude of the range of values for int into positive values only
+    //i.e. the unsigned int range is 0 to ~4billion
+    //what if you only want negative values in your range?
+    u = -1;
+    std::cout << "unsigned int = -1: " << u << std::endl;
+    //you get a range of -1 to ~4billion, i.e. the range starts at -1 but loops back up to the positives
+    /*think of the integer limits like this:
+    the realm of all possible numbers is ~4billion
+    so when you reach the limit on one end of this set of 4billion integers and try to go the the integer
+    that's +1 beyond the max integer you will be looped back to the min integer.
+    Similarly, if you're at the minimum integer and try to go -1 below that integer, you will get looped back around
+    to the maximum integer.
+    This shows that the integer range is cyclic i.e. the max and min value for the integer range can be thought of as
+    being adjacent to each other on a circular number line
+    */
+    //example
+    int i = 2147483647;
+    i += 1;
+    std::cout << "i now: " << i << std::endl;
+    //i is initially the maximum signed integer value, then +1 is added to it.
+    //the result is you end up at the negative maximum integer value, thus demonstrating the cyclic behavior of integers in C++
+
+    //what if you specify a variable but don't assign a value to it?
+    double d;
+    std::cout << d << std::endl;
+    // specifying double d without specifying a value yields a some random, infitesimally small value (e.g. on the order of 10^-300)
+    //it's just whatever number happened to be in the compiler's memory at the point in time you ran this set of code
+    //you should always initialize/assign a value to variables, i.e. don't leave them operations
+
+
+    return 0;
+}
+
+
+
+
+//lecture on memory
+
+#include <iostream>
+
+int main(void)
+{
+    //create an array of 10 integers
+    int my_array[10]; //you specify the length of the array you want to create
+
+    for(int i = 0; i < 10; i++)
+    {
+        //set the ith value to 2*I
+        my_array[i] = 2*i;
+    }
+
+    for(int i = 0; i < 10; i++)
+    {
+        std::cout << "Element " << i << " : " << my_array[i] << std::endl;
+    }
+    
+    //what if you try to assign elements beyond the range of the array?
+    //e.g.
+    int my_array[10];
+    std::cout << "element 10: " << my_array[10] << std::endl;
+    //since you did not initialize the 11th position (0 - 11) the computer generates a random
+    //value since it knows you tried allocating a value beyond the range of what you had specified
+    //this is a security feature
+
+
+
+
+
+
+    //so how do you create an array where you don't know how long it'll end up being/i.e. you need
+    //a way to allocate an array without knowing exactly what will end up in there
+    int n_doubles = 16;
+
+    double * data = new double[n_doubles]; //this will allocate enough memory for an array containing 16 n_doubles
+    //now you can loop over the array like in the above example
+    for(int i = 0 ; i < 10; i++)
+    {
+        data[i] = 3.1415 * i;
+    }
+
+    for(int i = 0; i < 10; i++)
+    {
+        std::cout << "element: " << i << " : " << data[i] << std::endl;
+    }
+
+    //once you are done with an array in code, you need to tell the operating system you are done with that array so it can be deleted
+    delete [] data; //deletes the data in the array
+    //this is an old style way of doing this
+
+    return 0;
+}
+
+
+//new style way of handling arrays
+#include <iostream>
+#include <array>
+#include <vector> //using vector will be used as a "dynamic array"
+
+int main(void)
+{
+    //std::array<data type , how many elements of that type> name assigned to array
+    std::array<double , 3> darr;
+
+    for(int i = 0 ; i < 3; i++)
+    {
+        darr[i] = 3.1415 * i;
+    }
+
+    //to use a vector
+    //vectors can only hold values of the same type e.g. only integers, only doubles, etc.
+    std::vector<double> v; //note how we didn't specify a size for the vector so currently it has a size of zero
+    std::cout << "size of vector: " << v.size() << std::endl; // .size() returns the size of the vector
+    v.push_back(4.5678); v.push_back behaves as v.append in python, it just adds the specified value as a new element to the end of the vector
+    v.push_back(6.02e23); //so now v = [4.5678 6.02e23]
+    std::cout << "size: " << v.size() << std::endl;
+    std::cout << "element 1: " << v[1] << std::endl;
+
+    //representation of a system of particles
+    std::vector<std::array<double , 3> coordinates;
+}
+
+
+//lecture on pointers and addresses
+
+int main(void)
+{
+    int j = 1234;
+    //you can have the computer tell you where it's storing this assigned value to just
+    std::cout << "address of j: " << &j << std::endl;
+    // the & is the operator that will display the address of variable j's assigned value in the computer's memory
+    //you can assign the value of the address to another variable and then use that variable to access that point in
+    //the computer's memory
+    std::cout << "value of j: " << j << std::endl;
+    int * pj = &j; //point pj points to the address of j 
+    std::cout << "value of pj: " << pj << std::endl;
+    //now the variable pj has the assigned value of the address of variable j 
+    //this makes pj a pointer variable
+    std::cout << "value of *pj: " << *pj << std::endl;
+    // the value of *pj is the assigned value to j (1234) 
+    //so pj tells you the point location of variable j and *pj tells you what is actually stored at point pj/the address of j
+    //so can you modify the value of j through pj?
+    *pj = 5678;
+    std::cout << "new value of pj: " << pj << std::endl;
+    std::cout << "new value of *pj: " << *pj : std::endl;
+    std::cout << "new value of j: " << j << std::endl;
+    //new value of pj does not change but *pj changes to the new assigned value of *pj
+    //and by changing *pj you effectively change the value of j to 5678 as well
+    //this illustrates how there are multiple ways to access a single variable based on its "spatial" position
+    //within the computer's memory without changing the location of where that piece of information is stored
+    
+    //what if you don't have something to initialize a pointer to?
+    int * pk = nillptr; //null in pre-c++11 and C
+    *pk = 9999;
+    //this yields the segmentation fault error because you're trying to assign to something that doesn't exist in the computer's memory
+    //same thing happens if you try to read from the null pointer
+    std::cout << *pk << std::endl;
+    //you can also change what a pointer points to
+    pk = &j; //so now pk = pj
+
+    return 0;
+}

@@ -1,0 +1,5 @@
+//defining function to be called in a separate file (Day9notes.txt)
+double convert_F_to_C(double temperature)
+{
+    return (temperature - 32.0) / 1.8;
+}

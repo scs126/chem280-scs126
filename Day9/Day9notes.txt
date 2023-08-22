@@ -1,0 +1,19 @@
+//how to split a c++ project into multiple files
+
+#include <iostream>
+#include <Day9notes_headerfile.txt> //includes the header file for this main file
+
+
+int main(void)
+{
+    double temperature = 68.1;
+    temperature = convert_F_to_C(temperature);
+
+    std::cout << "temperature is " << temperature << std::endl;
+
+
+    return 0;
+}
+
+//when you run the file that calls a function file but contains a header file, you only
+//need to specify the main file name in the terminal

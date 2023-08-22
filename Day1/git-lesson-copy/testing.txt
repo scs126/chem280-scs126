@@ -1,0 +1,9 @@
+******
+this is the start of testing.txt
+******
+
+I added this file from a clone
+
+******
+this is the end of testing.txt
+******

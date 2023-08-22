@@ -1,0 +1,11 @@
+#pragma once //include this at the top of every header file
+
+//when you actually make a header file, use .hpp file type
+//you can have as many declaration statements in a single header file as you want
+//never include a source file in a header file, only function definition files
+//do not compile header files
+//one good rule of thumb when starting a project is to create a header file for every source file you create,
+//as the project grows, you may need to assign more header files to a single source file
+
+//forward declaration from source file Day9notes.txt
+double convert_F_to_C(double temperature); //this is the declaration of a function

@@ -1,0 +1,124 @@
+Basic commands:
+pwd - tells you the path to the folder you're in
+ls - lists everything in the current folder/directory
+ls followed by a folder name - will list everything in that specified directory
+mkdir directory name - creates a new directory with the specified name
+cd directory name/ - change from current directory to specified directory (the forward slash isn't really necessary)
+code file name - code opens up the code text editor and specifying file name opens the specified file in Xcode text editor
+cp path - makes copy of a given file (you have to enter the file path to specify it)
+cp path path w/new file name - lets you rename a copied file
+rm file name - deletes specified file in the current directory you're in
+cd .. - moves you up one level in the directory path
+git --version - displays version of the git software you're using (want >2.18)
+git init - initialize a project for changes (only needs to be used once per file/project)
+ls -a - displays hidden folders in the current directory
+git status - tells you the status of a given project (will tell you if changes have been made or if no changes have been made/no commits to be made)
+git add file name - moves a file to the staging area before you commit it
+git commit -m "comments on changes made" - commits new version of file to local repository with comments on the changes made
+git log - displays record of commits/versions of the project that have been made (press q to quit log and get back to the terminal line)
+git log --oneline - displays previous versions but in single lines with each version's unique identifier
+git checkout identifier - reverts entire project back to the specified previous version (enter "main" in place of the unique identifier to take yourself back to the most up to date version of your file)
+git switch branch name - switches to a specified branch
+git switch -c branch name - switches to a new branch (the -c specifies that a new branch is to be made)
+
+git is a software that essentially keeps a version history of all versions for a given file so you can always go back and search previous versions/changes made by you or another user to a given file
+
+github is a hosting service that allows you to upload version history saved by git to an online repository (as opposed to the local repository git creates on your computer)
+
+if miniconda is setup you'll see
+(base) username:~$ 	on the command line when you open it (the squiggle indicates you are in your home directory)
+
+
+
+exercises:
+creating a README file using Xcode
+$ code README.md (opens editor with new file named README.md)
+in the text editor file type:
+# Chem 280
+This folder contains files and directories associated with Chem 280 - Foundations of Programming and Software Engineering for Molecular Science
+save, close text editor
+in terminal
+$ cp chem_280/README.md chem_280/README.md
+$ ls (to check the file is copied)
+$ cp chem_280/README.md README_copy.md (renames the copied file)
+$ ls (to check the copied file was renamed)
+challenge: navigate to chem280 folder and list files in it (should just be the README file)
+$ code README.md
+$ conda activate
+$ git config --list (to check your local git is configured)
+check if ssh key is configured on github
+$ code README.md
+in text editor
+# Exercise - use the skills you learned in the previous lesson to create a directory called git-lesson in the chem280 folder - then change directory into the folder you just created. print your working directory
+in terminal
+$ mkdir git-lesson
+$ ls
+$ cd git-lesson/
+$ ls
+$ pwd
+$ git --version
+use git to create a project (make sure you're in git-lesson folder)
+$ git init
+tells you you initialized a git repository in the git-lesson folder
+$ ls -a
+$ git status
+$ code . (the dot means text editor will open a new file that is located in the current repository)
+name opened file README.md in text editor
+# Git Lesson
+This lesson covers the basics of using git for version control
+
+drag up from bottom of text editory screen to access terminal window in the text editor (not necessary to use but may be convenient)
+$ conda activate python
+$ git status (should tell you no commits have been made to the README file yet)
+$ git add README.md
+$ git commit -m "add README with changes"
+$ git status (should say there's nothing to commit)
+$ git log
+add text to file
+This lesson is for the first day of the MSSE bootcamp
+save file, then in terminal
+$ git add README.md
+$ git status
+$ git commit -m "add more info to README"
+add text to file
+To make a commit/version/checkpoint of your files follow this procedure:
+1. make changes to your project you would like to keep
+2. when you have your changes, tell git you are ready to create by adding the files to the staging area using "git add filename"
+3. create a checkpoint ("commit") using "git commit -m message about what changes you made"
+save file, then in terminal
+$ git status (should say changes have been made)
+$ git add README.md
+$ git commit -m "procedure for committing changes to git repository"
+$ git status
+$ git log --oneline
+$ git checkout identifier (enter actual identifier)
+$ git checkout main
+$ git switch -c helloworld
+tells you you've switched to a new branch
+$ git status (should tell you you're in the helloworld branch)
+make new file in editor called quotes.py
+in text editor for python file
+---
+Functions to print things
+---
+def hello_world():
+	quote = "Hello, world"
+	return quote
+
+save file, then in terminal
+$ git add quotes.py
+$ git commit -m "add hello world function"
+$ git status
+$ git switch -c doc_update
+
+break 
+
+in terminal
+$ conda activate msse-python
+$ pwd
+$ ls
+$ cd chem280
+$ cd chem280/git-lesson
+$ ls
+$ git branch (check you are on the main branch)
+$ pwd

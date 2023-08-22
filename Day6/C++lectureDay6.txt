@@ -1,0 +1,61 @@
+Basic C++ syntax
+- g++ filename.cpp -o name is the syntax used to compile and link a given code file
+    this compile/linking must be done each time you make changes before you try to run the file from the terminal
+    after running this, you then run the file in the command line by entering the name you specified in the compile/link command
+- single line comments start with //
+- multiline comments start with /* and end with */
+- whitespace is not significant
+- rather than whitespace, statements are grouped together with curly braces {}
+    (i.e. statements are not broken up by line breaks, so you effectively could write an entire script in one very long line
+    where the statements are broken up by the curly brackets)
+- statements end with a semicolon
+- a variable's type must be specified before the first use of the variable
+- the return type of a function must be specified. The function must return an object of that type and only that type
+- C++ includes files whereas Python imports files
+
+
+Mapping C++ to Python types
+C++             Python      Description
+bool            bool        true/false
+int             int         integer number
+double          float       floating point number (64-bit)
+std::string     string      string of characters
+std::vectors    list        list/array of data
+std::maps       directly    key/value association
+
+
+example: calculating the volume of a sphere in C++
+#include <math>
+
+double sphere_volume(double radius)
+{
+    double pi = acos(-1);
+    return (4.0/3.0) * pi * pow(radius , 3);
+}
+
+
+- C++ is a general purpose, statistically-typed, compiled language originally developed in the 1980'statistically
+- C++ is designed by committees (whenever new features get added
+the committees meet)
+- there are several versions/standards of C++ (most recent is C++20)
+- C++11 and C++20 versions were considered major shifts in the language
+- newer standards are backwards compatible with older versions of C++
+
+C++ is split into the core language and a standard library
+- core language is the syntax, classes, templates, etc.
+- library is strings, vectors, maps, I/O, algorithms etc.
+
+What is a compiled language? Code is run directly through a compiler
+to produce machine code, where machine code is bindary and directly
+understood by the CPU
+interpreted languages like python are run through an interpreter
+which eventually reduces to machine code
+Compiled languages are much faster because there's no interpreter required
+
+Optimizations runs by a compiler
+- removing unused code
+- code inlining (putting the code from one functiondirectly into another)
+- reordering operations (better memory od cache behavior)
+
+in C++, once a variable type is set once, it cannot be changed
+- unlike Python, where you can change a variable from a string to an integer, for example

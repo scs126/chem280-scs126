@@ -1,0 +1,181 @@
+#include <iostream>
+#include <vector>
+#include <array>
+#include <string>
+
+int main(void)
+{
+    int N_double = 16;
+    std::vector<double> data;
+
+    for(int i = 0 ; i < n_double; i++)
+    {
+        data.push_back(3.1415*i);
+        std::cout << "size of the vector: " << data.size() << std::endl; //data.size() is equivalent to len() in python
+    }
+
+    std::cout << "element 3: " << data[3] << std::endl;
+    std::cout << "element 1000: " << data[10000] << std::endl;
+    //you haven't specified anything for position 10000 in the vector so you'll get a segmentation fault error just like you did with the array yesterday
+
+    data.clear(); //this deletes all data from the vector
+    std::cout << "size after clearing: " << data.size() << std::endl;
+
+    std::array<std::string , 3> names; //creates an array to contain 3 strings
+    std::cout << "size of names: " << names.size() << std::endl; //size is 3
+    names[0] = "name one";
+    names[10000] = "hello"; //this will give you a segmentation fault since you didn't allocate for a 10000th element in the array
+
+    int c_array1[3] = [1 , 2 , 3];
+    int c_array2[3] = [3 , 4 , 5];
+    c_array2 = c_array1; //this will give an error because it can't compile the arrays
+
+    //if you want to compile two arrays you need to do this
+    std::array<int , 3> c_array1 = [1 , 2 , 3];n//in general, this is a better way to define arrays
+    std::array<int , 3> c_array2 = [4 , 5 , 6];
+    c_array2 = c_array1; now the arrays will compile
+    std::cout << c_array2[0] << std::endl;
+
+    /*
+        x0 y0 z0  <- atomcoord
+        x1 y1 z1  <- atomcoord
+        . . . 
+        xn yn zn  <- atomcoord
+    */
+
+    typedef std::array<double , 3> atomcoord;
+    typedef std::vector<atomcoord> coordinates;
+    atomcoord coord1 = (1.0 , 2.0 , 3.0);
+
+    //coordinating coords:
+    std::vector<std::array<double , 3>>
+    coords.push_back(coord1);
+    cords[1][2] //this is a way of nesting array coordinates in a vector
+    //creates a vector object like the multiline comment above
+
+
+    return 0
+}
+
+
+
+
+
+//lecture on references
+
+#include <iostream>
+#include <string>
+
+int main(void)
+{
+    std::string my_string = "hello world";
+
+    std::string * p_my_string = &my_string; // the * is a pointer
+    std::string & ref_my_string = my_string; // the & is a reference
+
+    std::cout << "my_string: " << my_string << std::endl;
+
+    std::cout << "p_my_string: " << p_my_string << std::endl;
+
+    std::cout << "ref_my_string: " << ref_my_string << std::endl;
+
+    std::cout << "address of My_string: " << ref_my_string << std::endl;
+    std::cout << "address of ref_my_string: " << &ref_my_string << std::endl;
+
+    ref_my_string[0] = 'h';
+    std::cout << "my_string now: " << my_string << std::endl;
+
+    std::string another_string = "another string";
+    ref_my_string = another_string;
+    std::cout << "ref_my_string now: << ref_my_string << std:endl;
+    std::cout << "my_string now: " << my_string << std::endl;
+
+    
+    const double pi = 3.1415; //marking variable as constant means it won't allow the variable value to be changed later
+    //since you effectively made the value a constant throughout the code
+    pi = 4.1415; //so if you try to change the constant's value you'll get an error returned in the terminal
+    //about not being able to change the assigned constant value to variable pi
+
+    //what if you make a string a constant reference to a string that itself isn't constant?
+    const std::string & ref_my_string_2 = my_string;
+    std::cout << "ref_my_string_2L " << ref_my_string_2 << std::endl;
+    ref_my_string_2 = "yet another string";
+    //so you can change the original, nonconstant string, but you cannot change the value of the constant string referencing that non-constant string
+
+    const std::string const_string = "is a constant string";
+    //can you create a reference to this constant string?
+    std::string & ref_const_string = const_string;
+    ref_cons_string = "is not really constant";
+    //so if you have a nonconstant variable you can create constant reference variables to it
+    //but if you have a constant variable you cannot create nonconstant reference variables to it,
+    // i.e. you can only create constant references to a constant variable
+
+
+
+    return 0;
+}
+
+
+
+
+
+
+//lecture on functions, function calling convention
+
+#include <iostream>
+
+void convert_F_to_C(const double & temperature) //using the & reads double with a variable referenced to the double value type
+//the & reference makes it so the variable temp (below) and the temporary variable temperature in the function are referenced to the same
+//address in the operating system's memory
+//also the const assignment in the function input definition makes it so the input does not change within the function itself
+{
+    temperature = (temperature - 32.0) / 1.8; //converts Farenheit to Celsius
+}
+
+int main(void)
+{
+    double temp = 68.1;
+    double new_temp = convert_F_to_C(temp); //double & temperature = temp
+    std::cout << temp << "F = " << new_temp << " C" << std::endl;
+
+    return 0;
+}
+
+/* notes on how to call inputs to a function:
+    for small data types <64bits like integers, doubles, pass by copy
+    if you're going to change the small data, pass by reference
+    for large data types, pass by constant reference
+*/
+
+//in python you can only have one function by a given name
+//in c++ you can have multiple functions by the same name if they take different input types
+//e.g.
+std::vector<double> convert_F_to_C(const std::vector<double> & temperatures)
+{
+    std::vector<double> converted;
+    for(int i = 0; i < temperatures.size(); i++)
+    {
+        double t = convert_F_to_C(temperatures[i]);
+        converted.push_back(t);
+    }
+
+    std::vector<double> t_vec;
+    t_vec.push_back(0.0);
+    t_vec.push_back(-40.0);
+    t_vec.push_back(123.4);
+
+    std::vector<double> new_temperatures = convert_F_to_C(t_vec);
+    //using this nomenclature to define a vector every time you need to define a new vector
+    //can get tedious so a faster, cleaner looking way to define a vector is:
+    //auto new_temperatures = convert_F_to_C(t_vec);
+    
+    for(int i = 0; i < new_temperatures.size(); i++)
+    //for vectors you usually want to use size_t instead of int but that's only because vector sizes can
+    //potentially be much larger than the range of the integer type
+    {
+        std::cout << new_temperatures << std::endl;
+    }
+
+
+    return 0
+}
